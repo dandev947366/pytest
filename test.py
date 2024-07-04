@@ -1,5 +1,5 @@
 import pytest
-from main import add, divide, Circle, Rectangle
+from main import add, divide, Circle, Rectangle, Square, Shape
 import math
 import time
 def test_add():
@@ -62,7 +62,7 @@ def test_not_same_area_rec(my_circle, my_rectangle):
     
 @pytest.mark.slow
 def test_very_slow():
-    time.sleep(5)
+    time.sleep(2)
     result = divide(10, 5)
     assert result == 2
     
@@ -73,3 +73,13 @@ def test_add():
 @pytest.mark.xfail(reason="We know we cannot divide by zero")
 def test_divide_by_zero():
     divide(10,0)
+    
+@pytest.fixture
+def my_square():
+    return Square(10)
+    
+# running multiple test cases at once
+@pytest.mark.parametrize("side_length, expected_area", [(5, 25), (4, 16), (9, 81)])
+def test_multiple_square_areas(side_length, expected_area):
+    assert Square(side_length).area() == expected_area
+    
