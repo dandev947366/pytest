@@ -16,7 +16,7 @@ def test_divide():
 def test_divide_by_zero():
     with pytest.raises(ValueError):
         divide(10, 0)
-        
+             
 class TestCircle:
     def setup_method(self, method):
         self.circle = Circle(10)
@@ -29,18 +29,21 @@ class TestCircle:
         result = 2 * math.pi * self.circle.radius
         assert self.circle.perimeter() == result
         
-def test_rec_area():
-    rectangle = Rectangle(10, 20)
-    assert rectangle.area() == 10 * 20
+@pytest.fixture
+def my_rectangle():
+    return Rectangle(10, 20)
 
-def test_rec_perimeter():
-    rectangle = Rectangle(10, 20)
-    assert rectangle.perimeter() == (10*2) + (20*2)
+def test_rec_area(my_rectangle):
+    assert my_rectangle.area() == 10 * 20
+
+def test_rec_perimeter(my_rectangle):
+    assert my_rectangle.perimeter() == (10*2) + (20*2)
     
-def test_circle_area():
-    circle = Circle(10)
-    assert circle.area() == math.pi * 10 ** 2
+@pytest.fixture
+def my_circle():
+    return Circle(10)
+def test_circle_area(my_circle):
+    assert my_circle.area() == math.pi * 10 ** 2
     
-def test_circle_perimeter():
-    circle = Circle(10)
-    assert circle.perimeter() == 2 * math.pi * 10
+def test_circle_perimeter(my_circle):
+    assert my_circle.perimeter() == 2 * math.pi * 10
