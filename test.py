@@ -1,6 +1,7 @@
 import pytest
 from main import add, divide, Circle, Rectangle
 import math
+import time
 def test_add():
     result = add(1, 4)
     assert result == 5
@@ -55,3 +56,20 @@ def test_circle_area(my_circle):
 
 def test_circle_perimeter(my_circle):
     assert my_circle.perimeter() == 2 * math.pi * 10
+    
+def test_not_same_area_rec(my_circle, my_rectangle):
+    assert my_circle.area() != my_rectangle.area()
+    
+@pytest.mark.slow
+def test_very_slow():
+    time.sleep(5)
+    result = divide(10, 5)
+    assert result == 2
+    
+@pytest.mark.skip(reason="This feature is currently broken")
+def test_add():
+    assert add(1, 2) == 3
+    
+@pytest.mark.xfail(reason="We know we cannot divide by zero")
+def test_divide_by_zero():
+    divide(10,0)
